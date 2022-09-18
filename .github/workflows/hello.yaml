@@ -2,13 +2,15 @@ name: hello
 on:
   push:
     path:
-      # - '!README'
-      # - '!docs/**'
-      # - '**.js'
+      - '!README'
+      - '!docs/**'
+      - '**.js'
     branches:
-    # - 'main'
-    # - 'release/**'
-    # - '!dev/**'
+    - 'main'
+    - 'release/**'
+    - '!dev/**'
+  pull_request:
+    type: [opened, reopened, synchronize, labeled, unlabeled]
   workflow_dispatch:
 jobs:
   say-hello:
