@@ -2,17 +2,25 @@ name: hello
 on:
   push:
     path:
-      # - '!README'
-      # - '!docs/**'
-      # - '**.js'
+      - '!README'
+      - '!docs/**'
+      - '**.js'
     branches:
-    # - 'main'
-    # - 'release/**'
-    # - '!dev/**'
+    - 'main'
+    - 'release/**'
+    - '!dev/**'
+  pull_request:
+    type: [opened, reopened, synchronize, labeled, unlabeled]
   workflow_dispatch:
 jobs:
   say-hello:
     runs-on: ubuntu-latest
     steps:
-    - run: echo "TODAY=$(date +%y-%m-%d)" >> $GITHUB_ENV
-    - run: echo Hello, today is $TODAY
+      - uses: mheap/github-action-required-labels@v1
+        with:
+          mode: exactly
+          count: 0
+          labels: "do not build"
+      - run: echo "TODAY=$(date +%y-%m-%d)" >> $GITHUB_ENV
+      - run: echo Hello, today is $TODAY
+      - run: docker image ls
